@@ -43,6 +43,8 @@ function createParkingLot(capacity) {
     const slot = {
       slotNumber: slotNumber,
       isOccupied: false,
+      registrationNumber: null,
+      color: null
     }
 
     parkingSlots.push(slot);
@@ -79,6 +81,11 @@ function parkVehicle(registrationNumber, color) {
     throw new Error("Parking lot not initialized");
   }
 
+
+  if (registrationToSlotMap.has(registrationNumber)) {
+    throw new Error("This vehicle is already parked");
+  }
+
   // check if slot is available for car entering
   if (availableSlots.length === 0) {
     throw new Error("Parking slot is full")
@@ -92,6 +99,8 @@ function parkVehicle(registrationNumber, color) {
 
   // Mark it occupied
   slot.isOccupied = true;
+  slot.registrationNumber = registrationNumber;
+  slot.color = color;
 
   const ticketID = `TICKET_${Date.now()}`;
 
@@ -191,8 +200,6 @@ function getRegistrationNumbersByColor(color) {
 
 
 
-
-
 /**
  * Provides the slot number where a vehicle with the given
  * registration number is currently parked.
@@ -214,3 +221,150 @@ function getSlotNumberByRegistrationNumber(registrationNumber) {
   return registrationToSlotMap.get(registrationNumber);
 
 }
+
+
+createParkingLot(10);
+
+const slotsContainer = document.querySelector(".slots-container");
+const addButton = document.getElementById("add");
+const modalOverlay = document.getElementById("modal-overlay");
+
+const addVehicleModal = document.getElementById("add-vehicle-modal");
+const ticketModal = document.getElementById("ticket-modal");
+
+const submitButton = document.getElementById("submitVehicle");
+const closeTicketButton = document.getElementById("closeTicket");
+
+const ticketNoSpan = document.getElementById("ticketNo");
+const slotNoSpan = document.getElementById("slotNo");
+
+const registrationInput = document.getElementById("registrationInput");
+const colorInput = document.getElementById("colorInput");
+
+
+function highlightSlot(slotNumber) {
+  const slotDivs = document.querySelectorAll(".slot");
+
+  slotDivs.forEach(div => {
+    if (div.textContent.includes(slotNumber)) {
+      div.style.outline = "4px solid red";
+    }
+  });
+}
+
+function renderSlots() {
+  slotsContainer.innerHTML = "";//emove existing
+
+  parkingSlots.forEach(slot => {
+    const slotDiv = document.createElement("div");// creates a element in js memory
+    slotDiv.className = "slot";
+    slotDiv.textContent = slot.slotNumber;
+
+    if (slot.isOccupied) {
+      slotDiv.style.backgroundColor = "#896a1dff";
+
+      const regText = document.createElement("div");
+      regText.className = "slot-registration";
+      regText.textContent = slot.registrationNumber;
+
+      const colorBox = document.createElement("div");
+      colorBox.className = "slot-color";
+      colorBox.style.backgroundColor = slot.color.toLowerCase();
+
+      slotDiv.appendChild(regText);
+      slotDiv.appendChild(colorBox);
+
+    } else {
+      slotDiv.textContent = `Slot ${slot.slotNumber}`;
+    }
+
+
+    if (slot.slotNumber % 2 === 1) {
+      slotDiv.style.gridColumn = "1";
+    } else {
+      slotDiv.style.gridColumn = "3";
+    }
+
+    slotsContainer.appendChild(slotDiv); // renders the element to the browser
+  });
+}
+
+renderSlots()
+const searchInput = document.getElementById("search");
+
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.trim().toLowerCase();
+
+  renderSlots();
+
+  if (!query) return;
+
+  if (registrationToSlotMap.has(query.toUpperCase())) {
+    const slotNumber = registrationToSlotMap.get(query.toUpperCase());
+    highlightSlot(slotNumber);
+    return;
+  }
+
+  const registrations = getRegistrationNumbersByColor(query);
+
+  if (registrations.length === 0) {
+    alert("No vehicles found");
+    return;
+  }
+
+  alert("Vehicles found: " + registrations.join(", "));
+});
+
+
+addButton.addEventListener("click", () => {
+  modalOverlay.style.display = "flex";
+  addVehicleModal.style.display = "flex";
+  ticketModal.style.display = "none";
+});
+
+
+submitButton.addEventListener("click", () => {
+
+  const registration = registrationInput.value.trim();
+  const color = colorInput.value.trim();
+
+  if (!registration || !color) {
+    alert("Please enter registration number and color");
+    return;
+  }
+  try {
+    const ticketId = parkVehicle(registration, color);
+
+    const slotNumber = getSlotNumberByRegistrationNumber(registration);
+
+    ticketNoSpan.textContent = ticketId;
+    slotNoSpan.textContent = slotNumber;
+
+    addVehicleModal.style.display = "none";
+    ticketModal.style.display = "flex";
+
+    renderSlots();
+  } catch (error) {
+    alert(error.message);
+  }
+});
+
+
+closeTicketButton.addEventListener("click", () => {
+  modalOverlay.style.display = "none";
+  ticketModal.style.display = "none";
+});
+
+
+modalOverlay.addEventListener("click", (event) => {
+  if (event.target === modalOverlay) {
+    modalOverlay.style.display = "none";
+    addVehicleModal.style.display = "none";
+    ticketModal.style.display = "none";
+    registrationInput.value = "";
+    colorInput.value = "";
+  }
+});
+
+
+

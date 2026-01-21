@@ -42,10 +42,29 @@ header {
 
 .slot {
   background-color: white;
-  border-style: solid;
-  border-width: 8px;
-  border-color: #FED018;
+  border: 8px solid #FED018;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  font-weight: bold;
+  font-size: 18px;
   /* border: 10px solid yellow; */
+}
+
+.slot.occupied {
+  background-color: #fff;
+}
+
+.slot-registration {
+  font-size: 20px;
+}
+
+.slot-color {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 2px solid #000;
 }
 
 
@@ -62,7 +81,6 @@ header {
   position: fixed;
   inset: 0;
   display: none;
-  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -72,7 +90,6 @@ header {
   background: white;
   padding: 24px;
   border-radius: 12px;
-  display: flex;
   align-items: center;
   justify-content: center;
   width: 320px;
