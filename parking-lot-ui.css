@@ -6,7 +6,6 @@
 
 
 body {
-  background-color: #788088;
   font-family: Montserrat, sans-serif;
   padding: 20px;
 }
@@ -14,17 +13,24 @@ body {
 header {
   padding: 20px;
   display: grid;
-  grid-template-columns: 3fr 2fr 1fr
+  grid-template-columns: 3fr 1fr 2fr 2fr
 }
 
 #search {
-  border-style: solid;
-  border-width: 10px;
-  border-color: black
+  border: 10px solid black;
+  padding: 20px;
 }
 
+#add {
+  padding: auto;
+  margin: 10px;
+}
+
+#color-Filter {}
+
 .parking-lot {
-  background-color: #806868;
+  background-color: #010101;
+  color: white;
 
 }
 
@@ -76,35 +82,32 @@ header {
   grid-column: 3;
 }
 
-#modal-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
 
-.modal {
-  display: none;
-  background: white;
-  padding: 24px;
+dialog {
+  border: none;
   border-radius: 12px;
-  align-items: center;
-  justify-content: center;
+  padding: 24px;
   width: 320px;
-  flex-direction: column;
-  gap: 16px;
-
+  margin: auto;
 
 }
 
-.modal input {
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+dialog h3 {
+  margin-bottom: 12px;
+}
+
+dialog input {
   padding: 10px;
   font-size: 14px;
+  width: 100%;
 }
 
-.modal button {
+dialog button {
+
   padding: 10px;
   font-size: 14px;
   cursor: pointer;

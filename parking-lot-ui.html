@@ -9,44 +9,44 @@
 
 <body>
 
-  <h1>Parking Lot System</h1>
 
   <section class="parking-lot">
     <header>
-      <h2>Parking Slots</h2>
-      <!-- <div id="search"> Search</div> -->
-      <input type="search" id="search" placeholder="Search" />
+      <h1>Parking Slots</h1>
       <button id="add">+ </button>
+      <!-- <div id="search"> Search</div> -->
+      <select id="colorFilter">
+        <option value="">Select Color</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="black">Black</option>
+        <option value="white">White</option>
+        <option value="green">Green</option>
+      </select>
+      <input type="search" id="search" placeholder="Search" />
+
     </header>
 
-    <div class="slots-container">
-    </div>
-    <div id="modal-overlay">
-      <div class="modal" id="add-vehicle-modal">
-        <h3>Add Vehicle</h3>
-
-        <input type="text" id="registrationInput" placeholder="Registration Number" />
-
-        <input type="text" id="colorInput" placeholder="Color" />
-
-        <button id="submitVehicle">Submit</button>
-
-
-      </div>
-      <div class="modal" id="ticket-modal">
-        <h3>Parking Ticket</h3>
-
-        <p><strong>Ticket No:</strong> <span id="ticketNo"></span></p>
-        <p><strong>Slot:</strong> <span id="slotNo"></span></p>
-
-        <button id="closeTicket">Close</button>
-      </div>
-
-    </div>
-
-
-
+    <div class="slots-container"></div>
   </section>
+  <dialog id="add-vehicle-dialog">
+    <h3>Add Vehicle</h3>
+
+    <input type="text" id="registrationInput" placeholder="Registration Number" />
+    <input type="text" id="colorInput" placeholder="Color" />
+
+    <button id="submitVehicle">Submit</button>
+  </dialog>
+
+  <dialog id="ticket-dialog">
+    <h3>Parking Ticket</h3>
+
+    <div><strong>Ticket No:</strong> <span id="ticketNo"></span></div>
+    <div><strong>Slot:</strong> <span id="slotNo"></span></div>
+
+    <button id="closeTicket">Close</button>
+  </dialog>
+
   <script src="parking.js" defer></script>
 
 </body>
