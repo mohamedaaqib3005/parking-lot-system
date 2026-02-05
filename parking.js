@@ -112,4 +112,8 @@ class ParkingLot {
 }
 
 const parkingLot = new ParkingLot();   // create instance(real object)
+// const obj = {};  JS does this underneath everytime u write new ParkingLot()
+// obj.__proto__ = ParkingLot.prototype;
+// ParkingLot.call(obj);
+// return obj;
 parkingLot.createParkingLot(10);       // initialize
