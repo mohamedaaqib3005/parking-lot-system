@@ -3,9 +3,17 @@ const RATE_PER_HOUR = 10;
 
 
 class ParkingLot {
+  static instance = null; // static keyword can be used only inside class ,instance is a variable
+
   constructor() {
+    if (ParkingLot.instance) { // Has a parking lot already been created
+      return ParkingLot.instance; // Don’t create a new parking lot(object) — give me the existing one
+    }
+
     this.parkingLotInitialized = false;
     this.parkingSlots = [];
+
+    ParkingLot.instance = this;
   }
 
 
