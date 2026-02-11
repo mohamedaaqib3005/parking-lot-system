@@ -55,6 +55,7 @@ class ParkingLot {
       throw new Error("Parking lot full");
     }
 
+    registrationNumber = registrationNumber.trim().toUpperCase();
     freeSlot.registrationNumber = registrationNumber;
     freeSlot.color = color;
     freeSlot.entryTime = Date.now();
@@ -125,3 +126,4 @@ const parkingLot = new ParkingLot();   // create instance(real object)
 // ParkingLot.call(obj);
 // return obj;
 parkingLot.createParkingLot(10);       // initialize
+

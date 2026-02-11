@@ -12,8 +12,10 @@ body {
 
 header {
   padding: 20px;
-  display: grid;
-  grid-template-columns: 3fr 1fr 2fr 2fr
+  display: flex;
+  align-items: centre;
+  justify-content: space-between;
+
 }
 
 #search {
@@ -27,6 +29,13 @@ header {
 }
 
 #color-Filter {}
+
+
+#SearchBtn {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
 
 .parking-lot {
   background-color: #010101;
@@ -107,7 +116,6 @@ dialog input {
 }
 
 dialog button {
-
   padding: 10px;
   font-size: 14px;
   cursor: pointer;
