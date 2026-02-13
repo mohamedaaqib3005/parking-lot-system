@@ -2,7 +2,7 @@ const CONVERT_TO_HOURS = 1000 * 60 * 60;
 const RATE_PER_HOUR = 10;
 
 
-class ParkingLot {
+export class ParkingLot {
   static instance = null; // static keyword can be used only inside class ,instance is a variable
 
   constructor() {
@@ -126,4 +126,5 @@ const parkingLot = new ParkingLot();   // create instance(real object)
 // ParkingLot.call(obj);
 // return obj;
 parkingLot.createParkingLot(10);       // initialize
+
 

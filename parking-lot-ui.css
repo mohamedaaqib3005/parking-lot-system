@@ -44,52 +44,59 @@ header {
 }
 
 .slots-container {
-  background-color: #010101;
   display: grid;
+  gap: 16px;
   padding: 20px;
-  grid-template-columns: 1fr 180px 1fr;
-  grid-auto-rows: 100px;
   margin-top: 15px;
-  /* row-gap:40px; */
-
 }
 
-
 .slot {
-  background-color: white;
-  border: 8px solid #FED018;
+  height: 80px;
+  border: 4px solid #FED018;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
+  padding: 10px;
   font-weight: bold;
-  font-size: 18px;
-  /* border: 10px solid yellow; */
+  font-size: 16px;
+  background: white;
+}
+
+.slot.free {
+  background: white;
+  color: #000;
 }
 
 .slot.occupied {
-  background-color: #fff;
+  background: #8a6b1f;
+  color: white;
+}
+
+.slot.elevator {
+  background: #ddd;
+  color: #000;
+  justify-content: center;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.slot.gap {
+  visibility: hidden;
 }
 
 .slot-registration {
-  font-size: 20px;
+  font-size: 18px;
 }
 
-.slot-color {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+.slot-color,
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
   border: 2px solid #000;
 }
 
-
-.slot:nth-child(odd) {
-  grid-column: 1;
-}
-
-.slot:nth-child(even) {
-  grid-column: 3;
-}
 
 
 dialog {
@@ -120,3 +127,52 @@ dialog button {
   font-size: 14px;
   cursor: pointer;
 }
+
+
+/* .slots-container {
+  background-color: #010101;
+  display: grid;
+  padding: 20px;
+  grid-template-columns: 1fr 180px 1fr;
+  grid-auto-rows: 100px;
+  margin-top: 15px;
+  /* row-gap:40px; */
+
+/* } */
+
+/*
+.slot {
+  background-color: white;
+  border: 8px solid #FED018;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  font-weight: bold;
+  font-size: 18px;
+  /* border: 10px solid yellow; */
+/* } */
+
+/* .slot.occupied { */
+/* background-color: #fff; */
+/* } */
+
+/* .slot-registration { */
+/* font-size: 20px; */
+/* } */
+
+/* .slot-color { */
+/* width: 40px; */
+/* height: 40px; */
+/* border-radius: 8px; */
+/* border: 2px solid #000; */
+/* } */
+
+
+/* .slot:nth-child(odd) { */
+/* grid-column: 1; */
+/* } */
+
+/* .slot:nth-child(even) { */
+/* grid-column: 3; */
+/* } */

@@ -1,3 +1,6 @@
+import { parkingLayout } from "./parking-lot-layout.js";
+import { ParkingLot } from "./parking-core.js";
+
 // DOM Manipulation
 const slotsContainer = document.querySelector(".slots-container");
 const addButton = document.getElementById("add");
@@ -44,43 +47,77 @@ function clearHighlights() {
   });
 }
 
+const parkingLot = new ParkingLot(parkingLayout);
+
+function buildGrid(layout) {
+  const grid = Array.from({ length: layout.rows }, () =>
+    Array.from({ length: layout.cols }, () => null)
+  );
+
+  layout.slots.forEach(cell => {
+    grid[cell.row][cell.col] = cell;
+  });
+
+  return grid;
+}
+
 function renderSlots() {
-  slotsContainer.innerHTML = "";//remove existing
+  slotsContainer.innerHTML = "";
 
-  parkingLot.parkingSlots.forEach(slot => {
-    const slotDiv = document.createElement("div");// creates a element in js memory
-    slotDiv.className = "slot";
-    slotDiv.dataset.slotNumber = slot.slotNumber;
+  const grid = buildGrid(parkingLayout);
 
+  slotsContainer.style.gridTemplateColumns =
+    `repeat(${parkingLayout.cols}, 1fr)`;
 
-    if (slot.registrationNumber !== null) {
-      slotDiv.style.backgroundColor = "#896a1dff";// create a class
+  let parkingIndex = 0;
 
-      const regText = document.createElement("div");
-      regText.className = "slot-registration";
-      regText.textContent = slot.registrationNumber;
+  grid.forEach(row => {
+    row.forEach(cell => {
+      const slotDiv = document.createElement("div");
 
-      const colorBox = document.createElement("div");
-      colorBox.className = "slot-color";
-      colorBox.style.backgroundColor = slot.color.toLowerCase();// use colors from dropdown for colors ,for the dropdown have color mappings
+      // GAP
+      if (!cell || cell.type === "gap") {
+        slotDiv.className = "slot gap";
+        slotsContainer.appendChild(slotDiv);
+        return;
+      }
 
-      slotDiv.appendChild(regText);
-      slotDiv.appendChild(colorBox);
+      // ELEVATOR
+      if (cell.type === "elevator") {
+        slotDiv.className = "slot elevator";
+        slotDiv.textContent = "ELEVATOR";
+        slotsContainer.appendChild(slotDiv);
+        return;
+      }
 
-    } else {
-      slotDiv.textContent = `Slot ${slot.slotNumber}`;
-    }
+      // PARKING SLOT
+      const parkingSlot = parkingLot.parkingSlots[parkingIndex++];
+      slotDiv.className = "slot";
+      slotDiv.dataset.slotNumber = parkingSlot.slotNumber;
 
+      if (parkingSlot.registrationNumber) {
+        slotDiv.style.backgroundColor = "#896a1dff";
 
-    if (slot.slotNumber % 2 === 1) {
-      slotDiv.style.gridColumn = "1";
-    } else {
-      slotDiv.style.gridColumn = "3";
-    }//expensive but used for dynamic layouts
+        const regText = document.createElement("div");
+        regText.className = "slot-registration";
+        regText.textContent = parkingSlot.registrationNumber;
 
-    slotsContainer.appendChild(slotDiv); // renders the element to the browser
+        const colorBox = document.createElement("div");
+        colorBox.className = "slot-color";
+        colorBox.style.backgroundColor =
+          parkingSlot.color.toLowerCase();
+
+        slotDiv.appendChild(regText);
+        slotDiv.appendChild(colorBox);
+      } else {
+        slotDiv.textContent = `Slot ${parkingSlot.slotNumber}`;
+      }
+
+      slotsContainer.appendChild(slotDiv);
+    });
   });
 }
+
 
 // searchInput.addEventListener("input", () => {
 //   const query = searchInput.value.trim().toLowerCase();
