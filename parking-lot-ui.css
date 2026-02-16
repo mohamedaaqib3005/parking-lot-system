@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+:root {
+  --primary-color: #010101;
+  --ascent-color: #FED018;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,22 +13,24 @@
 
 
 body {
-  font-family: Montserrat, sans-serif;
-  padding: 20px;
+  font-family: Lato, sans-serif;
+  padding: 1.5rem;
+  background-color: var(--primary-color);
+  height: 100%;
 }
 
 header {
-  padding: 20px;
+  padding: 1.2rem;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 1rem;
 
   /* justify-content: space-between; */
 
 }
 
 header h1 {
-  font-size: 28px;
+  font-size: 1.75rem;
   font-weight: 700;
   margin-right: auto;
   /* pushes rest to the right */
@@ -30,42 +39,42 @@ header h1 {
 header select,
 header input,
 header button {
-  height: 44px;
-  border-radius: 8px;
-  font-size: 14px;
+  height: 2.75rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
   border: none;
   outline: none;
 }
 
 #search {
-  border: 10px solid black;
-  padding: 20px;
+  border: 0.625rem solid black;
+  padding: 1.25rem;
 }
 
 #add {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  font-size: 22px;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.625rem;
+  font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
   border: none;
-  background: #FED018;
+  background: var(--ascent-color);
   color: black;
 }
 
 #colorFilter {
-  padding: 20px;
+  padding: 0.31rem;
 }
 
 #search {
-  width: 280px;
-  padding: 0 12px;
+  width: 17.5rem;
+  padding: 0 0.75rem;
   border: none;
 }
 
 #SearchBtn {
-  padding: 0 18px;
+  padding: 0 1rem;
   font-weight: 600;
   cursor: pointer;
   background: white;
@@ -74,27 +83,27 @@ header button {
 .parking-lot {
   background-color: #010101;
   color: white;
-
+  min-height: calc(100vh - 100px);/
 }
 
 .slots-container {
   display: grid;
-  gap: 16px;
-  padding: 20px;
-  margin-top: 15px;
+  gap: 1rem;
+  padding: 1.25rem;
+  margin-top: 1rem;
 }
 
 .slot {
-  height: 80px;
-  border: 4px solid #FED018;
-  border-radius: 10px;
+  height: 5rem;
+  border: 0.25rem solid var(--ascent-color);
+  border-radius: 0.625rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 0.625rem;
   font-weight: bold;
-  font-size: 16px;
-  background: white;
+  font-size: 1rem;
+  background: var(--primary-color);
 }
 
 .slot.free {
@@ -111,7 +120,7 @@ header button {
   background: #ddd;
   color: #000;
   justify-content: center;
-  font-size: 14px;
+  font-size: 1rem;
   letter-spacing: 1px;
 }
 
@@ -120,7 +129,7 @@ header button {
 }
 
 .slot-registration {
-  font-size: 18px;
+  font-size: 1.2rem;
 }
 
 .slot-color,
@@ -135,9 +144,9 @@ header button {
 
 dialog {
   border: none;
-  border-radius: 12px;
-  padding: 24px;
-  width: 320px;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  width: 20rem;
   margin: auto;
 
 }
@@ -147,7 +156,13 @@ dialog select,
 dialog button {
   display: block;
   width: 100%;
-  margin-top: 12px;
+  margin-top: 0.75rem;
+  padding: 1.25rem;
+  border-radius: 1.25rem;
+}
+
+dialog button {
+  background-color: var(--ascent-color);
 }
 
 
@@ -156,18 +171,18 @@ dialog::backdrop {
 }
 
 dialog h3 {
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
 }
 
 dialog input {
-  padding: 10px;
-  font-size: 14px;
+  padding: 0.625rem;
+  font-size: 1rem;
   width: 100%;
 }
 
 dialog button {
-  padding: 10px;
-  font-size: 14px;
+  padding: 0.625rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 
