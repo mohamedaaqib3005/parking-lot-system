@@ -12,6 +12,7 @@ export class ParkingLot {
 
     this.parkingLotInitialized = false;
     this.parkingSlots = [];
+    // create a find method within this class
 
     ParkingLot.instance = this;
   }
@@ -116,6 +117,11 @@ export class ParkingLot {
     }
 
     return slot.slotNumber;
+  }
+
+
+  findSlotByNumber(slotNumber) {
+    return this.parkingSlots.find((slot) => slot.slotNumber === slotNumber);
   }
 
 }

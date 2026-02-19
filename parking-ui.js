@@ -21,16 +21,23 @@ const colorFilter = document.getElementById("colorFilter");
 const SearchBtn = document.getElementById("SearchBtn");
 
 const searchInput = document.getElementById("search");
+const exitBtn = document.getElementById("exit")
 
 function highlightSlot(slotNumber) {
   document.querySelectorAll(".slot").forEach(div => {
     if (Number(div.dataset.slotNumber) === slotNumber) {
-      div.style.outline = "4px solid red";
+      slot.ClassList.add = "highlighted";
     }
   });
 }
 
+function formatExitMessage(result) {
+  return `Vehicle exited\nSlot:${result.slotNumber}\nTotalHours:${result.hoursParked}\nFare:${result.totalFee}`
+}
 
+function showAlert(message) {
+  alert(message)
+}
 // function highlightSlot(slotNumber) {
 //   const slotDivs = document.querySelectorAll(".slot");
 
@@ -43,11 +50,11 @@ function highlightSlot(slotNumber) {
 
 function clearHighlights() {
   document.querySelectorAll(".slot").forEach(slot => {
-    slot.style.outline = "none";
+    slot.classList.remove = "highlighted";
   });
 }
 
-const parkingLot = new ParkingLot(parkingLayout);
+const parkingLot = new ParkingLot();//
 
 function buildGrid(layout) {
   const grid = Array.from({ length: layout.rows }, () =>
@@ -76,9 +83,9 @@ function renderSlots() {
       const slotDiv = document.createElement("div");
 
       // GAP
-      if (!cell || cell.type === "gap") {
+      if (cell.type === "gap") {
         slotDiv.className = "slot gap";
-        slotsContainer.appendChild(slotDiv);
+        slotsContainer.appendChild(slotDiv); //there should be no div for gaps
         return;
       }
 
@@ -96,18 +103,32 @@ function renderSlots() {
       slotDiv.dataset.slotNumber = parkingSlot.slotNumber;
 
       if (parkingSlot.registrationNumber) {
-        slotDiv.style.backgroundColor = "#896a1dff";
+        slotDiv.style.backgroundColor = "var(--occupied-color)";// add a class for occupied use a css var
 
         const regText = document.createElement("div");
         regText.className = "slot-registration";
         regText.textContent = parkingSlot.registrationNumber;
 
+        const exitBtn = document.createElement("button");
+        exitBtn.id = "exit-button";
+        exitBtn.textContent = "Exit"
+        exitBtn.addEventListener("click", () => {
+          try {
+            const result = parkingLot.exitParkingLot(parkingSlot.registrationNumber);
+            showAlert(formatExitMessage(result))
+            renderSlots()
+
+          } catch (err) {
+            alert(err.message);
+          }
+        });
         const colorBox = document.createElement("div");
         colorBox.className = "slot-color";
         colorBox.style.backgroundColor =
           parkingSlot.color.toLowerCase();
 
         slotDiv.appendChild(regText);
+        slotDiv.appendChild(exitBtn);
         slotDiv.appendChild(colorBox);
       } else {
         slotDiv.textContent = `Slot ${parkingSlot.slotNumber}`;
@@ -132,11 +153,12 @@ function renderSlots() {
 // }
 
 SearchBtn.addEventListener("click", () => {
+  clearHighlights();
+
   const registrationQuery = searchInput.value.trim().toUpperCase();
   const colorQuery = colorFilter.value.toLowerCase();
 
-  renderSlots();
-  clearHighlights();
+  // renderSlots();
 
   if (!registrationQuery && !colorQuery) {
     alert("Please enter registration number or select a color");
@@ -149,12 +171,12 @@ SearchBtn.addEventListener("click", () => {
       const slotNumber =
         parkingLot.getSlotNumberByRegistrationNumber(registrationQuery);
 
-      const slot = parkingLot.parkingSlots.find(
-        s => s.slotNumber === slotNumber
-      );
+
+      const slot = parkingLot.findSlotByNumber(slotNumber);
 
       if (colorQuery && slot.color !== colorQuery) {
-        alert("No vehicle found matching both registration and color");
+        let alertMessage = "No vehicle found matching both registration and color"
+        showAlert(alertMessage)
         return;
       }
 
@@ -172,7 +194,8 @@ SearchBtn.addEventListener("click", () => {
       parkingLot.getRegistrationNumbersByColor(colorQuery);
 
     if (registrations.length === 0) {
-      alert("No vehicles found with this color");
+      let alertmessage = "No vehicles found with this color"
+      showAlert(alertmessage);
       return;
     }
 
@@ -185,8 +208,8 @@ SearchBtn.addEventListener("click", () => {
         slotDiv.style.outline = "4px solid red";
       }
     });
-
-    alert("Vehicles found: " + registrations.join(", "));
+    let alertMessage = "Vehicles found: " + registrations.join(", ")
+    showAlert(alertMessage);
   }
 });
 
@@ -203,7 +226,8 @@ parkVehicle.addEventListener("click", () => {
   const color = colorInput.value.trim();
 
   if (!registration || !color) {
-    alert("Please enter registration number and color");
+    let alertMessage = "Please enter registration number and color";
+    showAlert(alertMessage);
     return;
   }
 
@@ -232,3 +256,9 @@ closeTicketButton.addEventListener("click", () => {
 });
 
 renderSlots()
+
+// create a exit functionality and fare
+// func not more than 15 lines
+// cannot manipulate  the class variable  it should have a method and access the method
+// no gap in json
+// classes for style use css var
